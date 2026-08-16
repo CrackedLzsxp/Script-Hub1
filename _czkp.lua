@@ -1,13 +1,68 @@
---// Rayfield UI
+--// Universal Rayfield Hub
+--// Made by _czkp
 
 local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
 
+local Players = game:GetService("Players")
+local TeleportService = game:GetService("TeleportService")
+
+local Player = Players.LocalPlayer
+
+--==================================================
+-- SAFE LOADSTRING FUNCTION
+--==================================================
+
+local function RunScript(url, name)
+    local success, err = pcall(function()
+
+        local source = game:HttpGet(url)
+
+        local func, compileError = loadstring(source)
+
+        if not func then
+            error("Compile error: " .. tostring(compileError))
+        end
+
+        func()
+    end)
+
+    if success then
+
+        print(name .. " executed successfully")
+
+        Rayfield:Notify({
+            Title = "Executed",
+            Content = name .. " executed successfully.",
+            Duration = 3
+        })
+
+    else
+
+        warn(name .. " failed: " .. tostring(err))
+
+        Rayfield:Notify({
+            Title = "Execution Failed",
+            Content = tostring(err),
+            Duration = 5
+        })
+
+    end
+end
+
+
+--==================================================
+-- WINDOW
+--==================================================
+
 local Window = Rayfield:CreateWindow({
+
     Name = "Universal Hub",
+
     Icon = 0,
+
     LoadingTitle = "Loading Script Hub...",
     LoadingSubtitle = "Made by _czkp",
-    
+
     ShowText = "Script Hub",
 
     Theme = "Default",
@@ -37,47 +92,86 @@ local Window = Rayfield:CreateWindow({
 -- CREDITS TAB
 --==================================================
 
-local CreditsTab = Window:CreateTab("Credits", 4483362458)
+local CreditsTab = Window:CreateTab(
+    "Credits",
+    4483362458
+)
 
 CreditsTab:CreateSection("Welcome")
 
 CreditsTab:CreateParagraph({
+
     Title = "Thanks for using!",
+
     Content = [[
 Welcome to the script hub!
 
 This script was created by _czkp.
 
-Thanks for taking the time to use the hub. More scripts, features, and updates may be added in the future.
+Thanks for taking the time to use the hub.
 
-If you find any bugs or have suggestions, feel free to report them to the creator.
+More scripts, features, and updates may be added in the future.
+
+If you find bugs or have suggestions, feel free to report them.
 
 Enjoy!
 ]]
+
 })
+
 
 CreditsTab:CreateSection("Information")
 
-CreditsTab:CreateLabel("Creator: _czkp")
 
-CreditsTab:CreateLabel("Version: 1.0.0")
+CreditsTab:CreateLabel(
+    "Creator: _czkp"
+)
 
-CreditsTab:CreateLabel("UI Library: Rayfield")
+CreditsTab:CreateLabel(
+    "Version: 1.0.0"
+)
+
+CreditsTab:CreateLabel(
+    "UI Library: Rayfield"
+)
 
 
 CreditsTab:CreateButton({
+
     Name = "Copy Creator Name",
+
     Callback = function()
+
         if setclipboard then
+
             setclipboard("_czkp")
 
             Rayfield:Notify({
+
                 Title = "Copied!",
+
                 Content = "_czkp was copied to your clipboard.",
+
                 Duration = 3
+
             })
+
+        else
+
+            Rayfield:Notify({
+
+                Title = "Clipboard Unsupported",
+
+                Content = "Your environment does not support setclipboard.",
+
+                Duration = 3
+
+            })
+
         end
+
     end
+
 })
 
 
@@ -85,281 +179,776 @@ CreditsTab:CreateButton({
 -- SCRIPTS TAB
 --==================================================
 
-local ScriptsTab = Window:CreateTab("Scripts", 4483362458)
+local ScriptsTab = Window:CreateTab(
+    "Scripts",
+    4483362458
+)
 
-ScriptsTab:CreateSection("Available Scripts")
+ScriptsTab:CreateSection(
+    "Available Scripts"
+)
 
 
--- BUTTON 1
+--==================================================
+-- INFINITE YIELD
+--==================================================
+
 ScriptsTab:CreateButton({
-    Name = "Infinite Yeild",
+
+    Name = "Infinite Yield",
+
     Callback = function()
 
-        loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
-
-
-        print("INF Yeild executed")
+        RunScript(
+            "https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source",
+            "Infinite Yield"
+        )
 
     end
+
 })
 
 
--- BUTTON 2
+--==================================================
+-- NAMELESS ADMIN
+--==================================================
+
 ScriptsTab:CreateButton({
+
     Name = "Nameless Admin",
+
     Callback = function()
 
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/FilteringEnabled/NamelessAdmin/main/Source"))()
-
-
-        print("NameLess Admin executed")
+        RunScript(
+            "https://raw.githubusercontent.com/FilteringEnabled/NamelessAdmin/main/Source",
+            "Nameless Admin"
+        )
 
     end
+
 })
 
 
--- BUTTON 3
+--==================================================
+-- SCRIPT 3
+--==================================================
+
 ScriptsTab:CreateButton({
+
     Name = "Script 3",
+
     Callback = function()
 
-        
+        Rayfield:Notify({
 
-        print("Script 3 executed")
+            Title = "Script 3",
+
+            Content = "No script has been added here yet.",
+
+            Duration = 3
+
+        })
 
     end
+
 })
 
 
--- BUTTON 4
+--==================================================
+-- REJOIN SERVER
+--==================================================
+
 ScriptsTab:CreateButton({
+
     Name = "Rejoin Server",
+
     Callback = function()
 
-             TeleportService:TeleportToPlaceInstance
-            game.PlaceId,
-            game.JobId,
-            Player
+        Rayfield:Notify({
 
-        print("Rejoin Server")
+            Title = "Rejoining",
+
+            Content = "Rejoining the current server...",
+
+            Duration = 3
+
+        })
+
+        task.wait(0.5)
+
+        local success, err = pcall(function()
+
+            TeleportService:TeleportToPlaceInstance(
+                game.PlaceId,
+                game.JobId,
+                Player
+            )
+
+        end)
+
+        if not success then
+
+            warn(
+                "Rejoin failed: "
+                .. tostring(err)
+            )
+
+        end
 
     end
+
 })
 
 
--- BUTTON 5
+--==================================================
+-- DARK DEX
+--==================================================
+
 ScriptsTab:CreateButton({
+
     Name = "Dark Dex V4",
+
     Callback = function()
 
-        loadstring(game:HttpGet("https://github.com/CrackedLzsxp/Dark-dex-v4/blob/main/dex.lua"))()
-
-        print("Dark Dex V4 executed")
+        RunScript(
+            "https://raw.githubusercontent.com/CrackedLzsxp/Dark-dex-v4/main/dex.lua",
+            "Dark Dex V4"
+        )
 
     end
+
 })
 
 
--- BUTTON 6
+--==================================================
+-- SERVER HOP
+--==================================================
+
 ScriptsTab:CreateButton({
+
     Name = "Server Hop",
+
     Callback = function()
 
-        local module = loadstring(game:HttpGet"https://raw.githubusercontent.com/LeoKholYt/roblox/main/lk_serverhop.lua")()
+        local success, err = pcall(function()
 
-module:Teleport(game.PlaceId)
+            local source = game:HttpGet(
+                "https://raw.githubusercontent.com/LeoKholYt/roblox/main/lk_serverhop.lua"
+            )
 
-        print("Server Hop executed")
+            local loaded, compileError = loadstring(source)
+
+            if not loaded then
+                error(compileError)
+            end
+
+            local module = loaded()
+
+            if module and module.Teleport then
+
+                module:Teleport(
+                    game.PlaceId
+                )
+
+            else
+
+                error(
+                    "Server hop module did not return a Teleport function."
+                )
+
+            end
+
+        end)
+
+        if not success then
+
+            warn(
+                "Server Hop failed: "
+                .. tostring(err)
+            )
+
+            Rayfield:Notify({
+
+                Title = "Server Hop Failed",
+
+                Content = tostring(err),
+
+                Duration = 5
+
+            })
+
+        end
 
     end
+
 })
 
 
--- BUTTON 7
+--==================================================
+-- AIRHUB
+--==================================================
+
 ScriptsTab:CreateButton({
+
     Name = "AirHub",
+
     Callback = function()
 
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/AirHub/main/AirHub.lua"))()
-
-        print("AirHub executed")
+        RunScript(
+            "https://raw.githubusercontent.com/Exunys/AirHub/main/AirHub.lua",
+            "AirHub"
+        )
 
     end
+
 })
 
 
--- BUTTON 8
+--==================================================
+-- INFINITE ZOOM
+--==================================================
+
 ScriptsTab:CreateButton({
+
     Name = "INF Zoom",
+
     Callback = function()
 
-        local UserInputService = game:GetService("UserInputService")
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
-local camera = workspace.CurrentCamera
+        Player.CameraMaxZoomDistance = 1000000
 
-local isEnabled = false
-local currentMaxZoom = player.CameraMaxZoomDistance
-local defaultMaxZoom = 100
+        Rayfield:Notify({
 
-        print("INF Zoom executed")
+            Title = "Infinite Zoom",
+
+            Content = "Maximum camera zoom increased.",
+
+            Duration = 3
+
+        })
 
     end
+
 })
 
 
--- BUTTON 9
+--==================================================
+-- CHAT LOGS
+--==================================================
+
 ScriptsTab:CreateButton({
-    Name = "Chat logs",
+
+    Name = "Chat Logs",
+
     Callback = function()
 
-        -- Farewell Infortality.
--- Version: 2.82
--- Instances:
-local ChatGui = Instance.new("ScreenGui")
-local Frame = Instance.new("Frame")
-local LogPanel = Instance.new("ScrollingFrame")
-local Close = Instance.new("TextButton")
-local Mini = Instance.new("TextButton")
-local Log = Instance.new("TextButton")
-local title = Instance.new("TextLabel")
---Properties:
-ChatGui.Name = "ChatGui"
-ChatGui.Parent = game.Players.LocalPlayer.PlayerGui
-ChatGui.ResetOnSpawn = false
+        -- Prevent duplicates
 
-Frame.Parent = ChatGui
-Frame.BackgroundColor3 = Color3.new(0, 0, 0)
-Frame.BorderSizePixel = 0
-Frame.Position = UDim2.new(0.0278396439, 0, 0.565217376, 0)
-Frame.Size = UDim2.new(0, 392, 0, 25)
-Frame.Active = true
-Frame.Draggable = true
+        local oldGui =
+            Player.PlayerGui:FindFirstChild(
+                "CZKPChatLogger"
+            )
 
-LogPanel.Name = "LogPanel"
-LogPanel.Parent = Frame
-LogPanel.BackgroundColor3 = Color3.new(0, 0, 0)
-LogPanel.BorderColor3 = Color3.new(0.223529, 0.223529, 0.223529)
-LogPanel.Position = UDim2.new(-0.000221580267, 0, 0.968695641, 0)
-LogPanel.Size = UDim2.new(0, 392, 0, 203)
-LogPanel.ScrollBarThickness = 5
-LogPanel.ScrollingEnabled = true
-LogPanel.CanvasSize=UDim2.new(2,0,100,0)
-
-Close.Name = "Close"
-Close.Parent = Frame
-Close.BackgroundColor3 = Color3.new(1, 1, 1)
-Close.BackgroundTransparency = 1
-Close.Position = UDim2.new(0.823979557, 0, 0.0399999991, 0)
-Close.Size = UDim2.new(0, 69, 0, 24)
-Close.Font = Enum.Font.SourceSans
-Close.Text = "Close"
-Close.TextColor3 = Color3.new(1, 1, 1)
-Close.TextSize = 14
-
-Mini.Name = "Mini"
-Mini.Parent = Frame
-Mini.BackgroundColor3 = Color3.new(1, 1, 1)
-Mini.BackgroundTransparency = 1
-Mini.Position = UDim2.new(0.647959173, 0, 0, 0)
-Mini.Size = UDim2.new(0, 69, 0, 24)
-Mini.Font = Enum.Font.SourceSans
-Mini.Text = "Minimize"
-Mini.TextColor3 = Color3.new(1, 1, 1)
-Mini.TextSize = 14
-
-Log.Name = "Log"
-Log.Parent = Frame
-Log.BackgroundColor3 = Color3.new(1, 1, 1)
-Log.BackgroundTransparency = 1
-Log.Position = UDim2.new(0.293367326, 0, 0, 0)
-Log.Size = UDim2.new(0, 69, 0, 24)
-Log.Font = Enum.Font.SourceSans
-Log.Text = "Log Chat [ON]"
-Log.TextColor3 = Color3.new(1, 1, 1)
-Log.TextSize = 14
-
-title.Name = "title"
-title.Parent = Frame
-title.BackgroundColor3 = Color3.new(1, 1, 1)
-title.BackgroundTransparency = 1
-title.Size = UDim2.new(0, 115, 0, 24)
-title.Font = Enum.Font.SourceSans
-title.Text = "Chat GUI"
-title.TextColor3 = Color3.new(1, 1, 1)
-title.TextSize = 14
-title.TextXAlignment = Enum.TextXAlignment.Left
--- Scripts:
-local logging = true
-local minimized = false
-Log.MouseButton1Down:Connect(function()
-	logging = not logging
-	if logging then Log.Text = "Log Chat [ON]" else Log.Text = "Log Chat [OFF]" end
-end)
-Mini.MouseButton1Down:Connect(function()
-	if minimized then
-		LogPanel:TweenSize(UDim2.new(0, 392, 0, 203), "InOut", "Sine", 0.5, false, nil)
-	else
-		LogPanel:TweenSize(UDim2.new(0, 392, 0, 0), "InOut", "Sine", 0.5, false, nil)
-	end
-	minimized = not minimized
-end)
-Close.MouseButton1Down:Connect(function()
-	ChatGui:Destroy()
-end)
-
-local prevOutputPos = 0
-function output(plr, msg)
-	if not logging then return end
-	local colour = Color3.fromRGB(255,255,255)
-	
-	if string.sub(msg, 1,1) == ":" or string.sub(msg,1,1) == ";" then colour = Color3.fromRGB(255,0,0) elseif string.sub(msg,1,2) == "/w" or string.sub(msg,1,7) == "/whisper" or string.sub(msg,1,5) == "/team" or string.sub(msg,1,2) == "/t" then colour = Color3.fromRGB(0,0,255) else colour = Color3.fromRGB(255,255,255) end
-	
- 	local o = Instance.new("TextLabel",LogPanel)
- 	o.Text = plr.Name .. ": " .. msg
- 	o.Size = UDim2.new(0.5,0,.006,0)
- 	o.Position = UDim2.new(0,0,.007 + prevOutputPos ,0)
- 	o.Font = Enum.Font.SourceSansSemibold
- 	o.TextColor3 = colour
- 	o.TextStrokeTransparency = 0
- 	o.BackgroundTransparency = 0
-	o.BackgroundColor3 = Color3.new(0,0,0)
- 	o.BorderSizePixel = 0
-	o.BorderColor3 = Color3.new(0,0,0)
- 	o.FontSize = "Size14"
-	o.TextXAlignment = Enum.TextXAlignment.Left
- 	o.ClipsDescendants = true
-	prevOutputPos = prevOutputPos + 0.007
-	end
-
-for i,v in pairs(game.Players:GetChildren()) do
-	v.Chatted:Connect(function(msg)
-		output(v, msg)
-	end)
-end
-
-game.Players.ChildAdded:Connect(function(plr)
-	if plr:IsA("Player") then
-		plr.Chatted:Connect(function(msg)
-			output(plr, msg)
-		end)
-	end
-end)
+        if oldGui then
+            oldGui:Destroy()
+        end
 
 
-        print("Chat Logs executed")
+        local ChatGui =
+            Instance.new("ScreenGui")
+
+        ChatGui.Name =
+            "CZKPChatLogger"
+
+        ChatGui.ResetOnSpawn =
+            false
+
+        ChatGui.Parent =
+            Player.PlayerGui
+
+
+        local Frame =
+            Instance.new("Frame")
+
+        Frame.Parent =
+            ChatGui
+
+        Frame.BackgroundColor3 =
+            Color3.fromRGB(
+                20,
+                20,
+                20
+            )
+
+        Frame.BorderSizePixel =
+            0
+
+        Frame.Position =
+            UDim2.new(
+                0.03,
+                0,
+                0.55,
+                0
+            )
+
+        Frame.Size =
+            UDim2.new(
+                0,
+                392,
+                0,
+                25
+            )
+
+        Frame.Active =
+            true
+
+        Frame.Draggable =
+            true
+
+
+        local LogPanel =
+            Instance.new(
+                "ScrollingFrame"
+            )
+
+        LogPanel.Parent =
+            Frame
+
+        LogPanel.BackgroundColor3 =
+            Color3.fromRGB(
+                0,
+                0,
+                0
+            )
+
+        LogPanel.BorderSizePixel =
+            0
+
+        LogPanel.Position =
+            UDim2.new(
+                0,
+                0,
+                1,
+                0
+            )
+
+        LogPanel.Size =
+            UDim2.new(
+                0,
+                392,
+                0,
+                203
+            )
+
+        LogPanel.ScrollBarThickness =
+            5
+
+        LogPanel.CanvasSize =
+            UDim2.new(
+                0,
+                0,
+                0,
+                0
+            )
+
+
+        local ListLayout =
+            Instance.new(
+                "UIListLayout"
+            )
+
+        ListLayout.Parent =
+            LogPanel
+
+        ListLayout.Padding =
+            UDim.new(
+                0,
+                2
+            )
+
+
+        local Close =
+            Instance.new(
+                "TextButton"
+            )
+
+        Close.Parent =
+            Frame
+
+        Close.BackgroundTransparency =
+            1
+
+        Close.Position =
+            UDim2.new(
+                1,
+                -70,
+                0,
+                0
+            )
+
+        Close.Size =
+            UDim2.new(
+                0,
+                70,
+                0,
+                25
+            )
+
+        Close.Font =
+            Enum.Font.SourceSans
+
+        Close.Text =
+            "Close"
+
+        Close.TextColor3 =
+            Color3.new(
+                1,
+                1,
+                1
+            )
+
+        Close.TextSize =
+            14
+
+
+        local Mini =
+            Instance.new(
+                "TextButton"
+            )
+
+        Mini.Parent =
+            Frame
+
+        Mini.BackgroundTransparency =
+            1
+
+        Mini.Position =
+            UDim2.new(
+                1,
+                -145,
+                0,
+                0
+            )
+
+        Mini.Size =
+            UDim2.new(
+                0,
+                75,
+                0,
+                25
+            )
+
+        Mini.Font =
+            Enum.Font.SourceSans
+
+        Mini.Text =
+            "Minimize"
+
+        Mini.TextColor3 =
+            Color3.new(
+                1,
+                1,
+                1
+            )
+
+        Mini.TextSize =
+            14
+
+
+        local LogToggle =
+            Instance.new(
+                "TextButton"
+            )
+
+        LogToggle.Parent =
+            Frame
+
+        LogToggle.BackgroundTransparency =
+            1
+
+        LogToggle.Position =
+            UDim2.new(
+                0,
+                115,
+                0,
+                0
+            )
+
+        LogToggle.Size =
+            UDim2.new(
+                0,
+                100,
+                0,
+                25
+            )
+
+        LogToggle.Font =
+            Enum.Font.SourceSans
+
+        LogToggle.Text =
+            "Log Chat [ON]"
+
+        LogToggle.TextColor3 =
+            Color3.new(
+                1,
+                1,
+                1
+            )
+
+        LogToggle.TextSize =
+            14
+
+
+        local Title =
+            Instance.new(
+                "TextLabel"
+            )
+
+        Title.Parent =
+            Frame
+
+        Title.BackgroundTransparency =
+            1
+
+        Title.Size =
+            UDim2.new(
+                0,
+                110,
+                0,
+                25
+            )
+
+        Title.Font =
+            Enum.Font.SourceSansSemibold
+
+        Title.Text =
+            "Chat GUI"
+
+        Title.TextColor3 =
+            Color3.new(
+                1,
+                1,
+                1
+            )
+
+        Title.TextSize =
+            14
+
+        Title.TextXAlignment =
+            Enum.TextXAlignment.Left
+
+
+        local logging =
+            true
+
+        local minimized =
+            false
+
+
+        local function UpdateCanvas()
+
+            LogPanel.CanvasSize =
+                UDim2.new(
+                    0,
+                    0,
+                    0,
+                    ListLayout.AbsoluteContentSize.Y
+                    + 10
+                )
+
+        end
+
+
+        ListLayout:GetPropertyChangedSignal(
+            "AbsoluteContentSize"
+        ):Connect(
+            UpdateCanvas
+        )
+
+
+        local function Output(
+            plr,
+            message
+        )
+
+            if not logging then
+                return
+            end
+
+
+            local label =
+                Instance.new(
+                    "TextLabel"
+                )
+
+            label.Parent =
+                LogPanel
+
+            label.BackgroundColor3 =
+                Color3.fromRGB(
+                    0,
+                    0,
+                    0
+                )
+
+            label.BorderSizePixel =
+                0
+
+            label.Size =
+                UDim2.new(
+                    1,
+                    -10,
+                    0,
+                    22
+                )
+
+            label.Font =
+                Enum.Font.SourceSansSemibold
+
+            label.TextSize =
+                14
+
+            label.TextXAlignment =
+                Enum.TextXAlignment.Left
+
+            label.TextColor3 =
+                Color3.fromRGB(
+                    255,
+                    255,
+                    255
+                )
+
+            label.Text =
+                plr.Name
+                .. ": "
+                .. message
+
+
+            if string.sub(
+                message,
+                1,
+                1
+            ) == ":"
+                or string.sub(
+                    message,
+                    1,
+                    1
+                ) == ";" then
+
+                label.TextColor3 =
+                    Color3.fromRGB(
+                        255,
+                        80,
+                        80
+                    )
+
+            end
+
+        end
+
+
+        LogToggle.MouseButton1Click:Connect(
+            function()
+
+                logging =
+                    not logging
+
+                if logging then
+
+                    LogToggle.Text =
+                        "Log Chat [ON]"
+
+                else
+
+                    LogToggle.Text =
+                        "Log Chat [OFF]"
+
+                end
+
+            end
+        )
+
+
+        Mini.MouseButton1Click:Connect(
+            function()
+
+                minimized =
+                    not minimized
+
+                if minimized then
+
+                    LogPanel.Visible =
+                        false
+
+                    Mini.Text =
+                        "Open"
+
+                else
+
+                    LogPanel.Visible =
+                        true
+
+                    Mini.Text =
+                        "Minimize"
+
+                end
+
+            end
+        )
+
+
+        Close.MouseButton1Click:Connect(
+            function()
+
+                ChatGui:Destroy()
+
+            end
+        )
+
+
+        local function ConnectPlayer(
+            plr
+        )
+
+            plr.Chatted:Connect(
+                function(message)
+
+                    Output(
+                        plr,
+                        message
+                    )
+
+                end
+            )
+
+        end
+
+
+        for _, plr in ipairs(
+            Players:GetPlayers()
+        ) do
+
+            ConnectPlayer(plr)
+
+        end
+
+
+        Players.PlayerAdded:Connect(
+            ConnectPlayer
+        )
+
+
+        Rayfield:Notify({
+
+            Title = "Chat Logs",
+
+            Content = "Chat logger opened.",
+
+            Duration = 3
+
+        })
 
     end
-})
 
---==================================================
--- LOADED NOTIFICATION
---==================================================
-
-Rayfield:Notify({
-    Title = "Script Hub Loaded",
-    Content = "Thanks for using the hub!",
-    Duration = 5
 })
 
 
@@ -367,20 +956,159 @@ Rayfield:Notify({
 -- GAMES TAB
 --==================================================
 
-local GamesTab = Window:CreateTab("Games", 4483362458)
+local GamesTab = Window:CreateTab(
+    "Games",
+    4483362458
+)
 
-GamesTab:CreateSection("Game Scripts")
+GamesTab:CreateSection(
+    "Game Scripts"
+)
 
 
--- GAME BUTTON 1
+--==================================================
+-- MM2
+--==================================================
+
 GamesTab:CreateButton({
+
     Name = "MM2",
+
     Callback = function()
 
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/fleecelolll/Mono/refs/heads/main/Script"))()
+        RunScript(
+            "https://raw.githubusercontent.com/fleecelolll/Mono/refs/heads/main/Script",
+            "MM2"
+        )
 
-        print("MM2 executed")
     end
+
 })
 
-Rayfield:LoadConfiguration()
+
+--==================================================
+-- GAME BUTTON 2
+--==================================================
+
+GamesTab:CreateButton({
+
+    Name = "Game Script 2",
+
+    Callback = function()
+
+        Rayfield:Notify({
+
+            Title = "Game Script 2",
+
+            Content = "Nothing has been added yet.",
+
+            Duration = 3
+
+        })
+
+    end
+
+})
+
+
+--==================================================
+-- GAME BUTTON 3
+--==================================================
+
+GamesTab:CreateButton({
+
+    Name = "Game Script 3",
+
+    Callback = function()
+
+        Rayfield:Notify({
+
+            Title = "Game Script 3",
+
+            Content = "Nothing has been added yet.",
+
+            Duration = 3
+
+        })
+
+    end
+
+})
+
+
+--==================================================
+-- GAME BUTTON 4
+--==================================================
+
+GamesTab:CreateButton({
+
+    Name = "Game Script 4",
+
+    Callback = function()
+
+        Rayfield:Notify({
+
+            Title = "Game Script 4",
+
+            Content = "Nothing has been added yet.",
+
+            Duration = 3
+
+        })
+
+    end
+
+})
+
+
+--==================================================
+-- GAME BUTTON 5
+--==================================================
+
+GamesTab:CreateButton({
+
+    Name = "Game Script 5",
+
+    Callback = function()
+
+        Rayfield:Notify({
+
+            Title = "Game Script 5",
+
+            Content = "Nothing has been added yet.",
+
+            Duration = 3
+
+        })
+
+    end
+
+})
+
+
+--==================================================
+-- LOAD CONFIG
+--==================================================
+
+pcall(function()
+
+    Rayfield:LoadConfiguration()
+
+end)
+
+
+--==================================================
+-- LOADED
+--==================================================
+
+Rayfield:Notify({
+
+    Title = "Script Hub Loaded",
+
+    Content = "Thanks for using the hub!",
+
+    Duration = 5
+
+})
+
+print("Universal Hub loaded successfully")
