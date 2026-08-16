@@ -377,7 +377,7 @@ GamesTab:CreateButton({
     Name = "MM2",
     Callback = function()
 
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/fleecelolll/Mono/refs/heads/main/Script"))()\
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/fleecelolll/Mono/refs/heads/main/Script"))()
 
         print("MM2 executed")
     end
